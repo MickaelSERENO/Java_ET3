@@ -14,6 +14,7 @@ public class Owner
 	private static Map<BankAccount, Owner> accountAssociation;
 
 	private BankAccount m_account;
+	private ArrayList<Company> m_companyOwned;
 
 	public Owner(BankAccount account) throws AssociationException
 	{
@@ -22,5 +23,11 @@ public class Owner
 
 		Owner.accountAssociation.put(account, this);
 		m_account = account;
+		m_companyOwned = new ArrayList<Company>();
+	}
+
+	public void addCompany(Company c)
+	{
+		m_companyOwned.add(c);
 	}
 }

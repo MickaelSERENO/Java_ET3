@@ -17,12 +17,14 @@ public class CentralRegister
 	private ArrayList<Denonciation> m_denonciation;
 	private ArrayList<Transaction>  m_fraudulentTrans;
 	private ArrayList<TaxPayer>     m_taxPayers;
+	private int                     m_currentDay;
 
 	private CentralRegister()
 	{
 		m_denonciation    = new ArrayList<Denonciation>();
 		m_fraudulentTrans = new ArrayList<Transaction>();
 		m_taxPayers       = new ArrayList<Transaction>();
+		m_currentDay      = 0;
 	}
 
 	public void addDenonciation(int day, Investigator inv, Transaction trans)

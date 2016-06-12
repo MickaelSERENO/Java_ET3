@@ -33,6 +33,11 @@ public class Country
 		return null;
 	}
 
+	private static Country getRandomCountry()
+	{
+		return m_country.get((int)(Math.random()*1000)%m_country.length());
+	}
+
 	//Class itself
 	private String m_name;
 

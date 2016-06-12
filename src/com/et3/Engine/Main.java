@@ -53,15 +53,21 @@ public class Main
 			taxPayers.add(TaxPayer);
 			//Et l'ajoute au registre central
 			CentralRegister.centralRegister.addTaxPayer(taxPayer);
-		}
 
-		//On leur créer ensuite un réseau d'entreprises
-		ArrayList<String> companyNames = new ArrayList<String>(m_companyNames);
-		for(int i=0; i < nbFraudulent; i++)
-		{
+			//Liste d'entreprise toujours valide
+			ArrayList<String> companyNames = new ArrayList<String>(m_companyNames);
+
+			//On leur créer ensuite un réseau d'entreprises
 			//Ajoute la première entreprise (nécessaire)
+			Bank bank       = bankList.get((int)(Math.random()*1000)%bankList.length());
+			BankAccount ba  = bank.createAccount((int)Math.random()*100000);
+			Country co      = Country.getRandomCountry();
+			String name     = companyNames.get((int)(Math.random()*1000)%companyNames.length());
+			Company company = new Company(ba, name, co, taxPayer);
 
 			//Appelle recursivement createTreeCompany qui va créer un arbre d'entreprise aléatoirement.
+			createTreeCompany(taxPayer, companyName, 0);
+			createTreeCompany(company, companyName, 1); //Don't forget the company created
 		}
 	}
 
@@ -71,21 +77,26 @@ public class Main
 	}
 
 	//Créer récursivement un arbre d'entreprise pour o.Le level aide à ne pas dépasser une certaine taille
-	void createTreeCompany(Owner o, int level)
+	void createTreeCompany(Owner o, ArrayList<String> companyName, int level)
 	{
 		//5 niveaux maximum
 		for(int i=0; i < (int)(Math.random() * 1000)%((int)Math.random() * 10 * (maxLevel-level)); i++)
 		{
 			//Créer l'entreprise et la ratache à o
+			Bank bank       = bankList.get((int)(Math.random()*1000)%bankList.length());
+			BankAccount ba  = bank.createAccount((int)Math.random()*100000);
+			Country co      = Country.getRandomCountry();
+			String name     = companyNames.get((int)(Math.random()*1000)%companyNames.length());
+			Company company = new Company(ba, name, co, o);
 			
 			//Lui créer à son tour un réseau d'entreprise
+			createTreeCompany(company, companyName, level+1);
 		}
 	}
 
 	public static void main(String[] argv)
 	{
 		Main m = new Main();
-
 
 		//Récupérer la liste des pays
 		ArrayList<String> countryList = new ArrayList<String>();
@@ -163,6 +174,8 @@ public class Main
 
 		//On récupère ensuite le nombre de compte frauduleux
 		int nbFraudulent = Integer.parseInt(prop.getProperty("nbFraudulent"));
+
 		m.init(nbFraudulent);
+		m.launch();
 	}
 }
