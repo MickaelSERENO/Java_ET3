@@ -8,19 +8,21 @@ import com.et3.Engine.Transaction;
 public class CentralRegister
 {
 	//Singleton statement
-	private static CentralRegister centralRegister=null;
-	public  static void initCentralRegister()
+	public static CentralRegister centralRegister=null;
+	public static void initCentralRegister()
 	{
 		CentralRegister.centralRegister = new CentralRegister();
 	}
 
 	private ArrayList<Denonciation> m_denonciation;
 	private ArrayList<Transaction>  m_fraudulentTrans;
+	private ArrayList<TaxPayer>     m_taxPayers;
 
 	private CentralRegister()
 	{
 		m_denonciation    = new ArrayList<Denonciation>();
 		m_fraudulentTrans = new ArrayList<Transaction>();
+		m_taxPayers       = new ArrayList<Transaction>();
 	}
 
 	public void addDenonciation(int day, Investigator inv, Transaction trans)
@@ -38,6 +40,11 @@ public class CentralRegister
 
 		m_denonciation.add(new Denonciation(day, inv, trans));
 		inv.addScore(100);
+	}
+
+	public void addTaxPayer(TaxPayer t)
+	{
+		m_taxPayers.add(t);
 	}
 
 	public void addFraudulentTrans(Transaction trans)
