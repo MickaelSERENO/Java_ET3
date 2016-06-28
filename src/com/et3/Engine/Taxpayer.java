@@ -4,8 +4,8 @@ import com.et3.Engine.BankAccount;
 
 public class Taxpayer extends Owner
 {
-	public Taxpayer(BankAccount account) throws AssociationException
+	public Taxpayer(BankAccount account, String name) throws AssociationException
 	{
-		super(account);
+		super(account, name);
 	}
 }

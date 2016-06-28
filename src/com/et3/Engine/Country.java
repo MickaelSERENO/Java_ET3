@@ -1,23 +1,27 @@
 package com.et3.Engine;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Country
 {
 	//Because we can't create twice the same country, use a static function to create them (and be sure it aren't created yet)
 	//
 	//List of countries
-	private static ArrayList<Country> countryList;
+	private static ArrayList<Country> countryList=null;
 
 	//Init the countries
-	private static void initCountries(ArrayList<String> countryNameList)
+	public static void initCountries(ArrayList<String> countryNameList)
 	{
-		Country.countryList.clear();
+		if(countryList == null)
+			countryList = new ArrayList<Country>();
+		else
+			Country.countryList.clear();
 		for(String name : countryNameList)
 			Country.countryList.add(new Country(name));
 	}
 
-	private static int getCooperation(Country c1, Country c2)
+	public static int getCooperation(Country c1, Country c2)
 	{
 		if(c1 == c2)
 			return -1;
@@ -25,7 +29,7 @@ public class Country
 		return c1.getCooperation(c2);
 	}
 
-	private static Country getCountry(String name)
+	public static Country getCountry(String name)
 	{
 		for(Country c : Country.countryList)
 			if(c.getName().equals(name))
@@ -33,18 +37,20 @@ public class Country
 		return null;
 	}
 
-	private static Country getRandomCountry()
+	public static Country getRandomCountry()
 	{
-		return m_country.get((int)(Math.random()*1000)%m_country.length());
+		return countryList.get((int)(Math.random()*1000)%countryList.size());
 	}
 
 	//Class itself
 	private String m_name;
+	private HashMap<Country, Integer> m_alliance;
 
 	//Singleton makes the Constructor private
 	private Country(String name)
 	{
 		m_name = name;
+		m_alliance = new HashMap<Country, Integer>();
 	}
 
 	//Make accusation
@@ -64,5 +70,10 @@ public class Country
 	public String getName()
 	{
 		return m_name;
+	}
+
+	public void addAlliance(Country c)
+	{
+		m_alliance.put(c, (int)(Math.random()*1000 % 4));
 	}
 }

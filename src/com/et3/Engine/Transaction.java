@@ -8,12 +8,15 @@ public class Transaction
 	private BankAccount m_source;
 	private BankAccount m_dest;
 	private int         m_id;
+	private int         m_day = 0;
+	private boolean     m_found;
 
 	public Transaction(BankAccount source, BankAccount dest)
 	{
 		m_source = source;
 		m_dest   = dest;
 		m_id     = Transaction.transID;
+		m_found  = false;
 		Transaction.transID = Transaction.transID+1;
 	}
 
@@ -30,5 +33,21 @@ public class Transaction
 	public int getID()
 	{
 		return m_id;
+	}
+
+	public boolean isFound()
+	{
+		return m_found;
+	}
+
+	public void setFound(boolean b, int day)
+	{
+		m_found = b;
+		m_day = day;
+	}
+
+	public int getDay()
+	{
+		return m_day;
 	}
 }

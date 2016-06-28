@@ -9,7 +9,7 @@ public class BankAccount
 	private Bank     m_bank;
 	private int      m_id;
 	private int      m_money;
-    private Taxpayer m_taxPayer;
+    private Owner    m_owner=null;
 
 	public BankAccount(Bank bank, int money)
 	{
@@ -22,5 +22,20 @@ public class BankAccount
 	public void setBank(Bank b)
 	{
 		m_bank = b;
+	}
+
+	public void setOwner(Owner o)
+	{
+		m_owner = o;
+	}
+
+	public Owner getOwner()
+	{
+		return m_owner;
+	}
+
+	public int getID()
+	{
+		return m_id;
 	}
 }

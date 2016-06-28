@@ -1,16 +1,18 @@
-JCC = javac
-SRCPATH = src/
-JFLAGS = -g -sourcepath src/ -cp bin -d bin
-CLASSES = $(wildcard src/com/et3/Engine/*.java)
+JCC           = javac
+SRCPATH       = src/
+JFLAGS        = -g -sourcepath src/ -cp bin -d bin
+ENGINECLASSES = $(wildcard src/com/et3/Engine/*.java src/com/et3/Game/*.java src/com/et3/Player/*.java)
+ENGINEOBJ     = $(ENGINECLASSES:.java=.class)
 
-OBJ = $(CLASSES:.java=.class)
+all: engineclasses
 
-all: classes
+engineclasses: $(ENGINEOBJ)
 
-classes: $(OBJ)
-
-%.class:%.java
+%.class: %.java
 	$(JCC) $(JFLAGS) $<
 
 run:
-	java -cp bin com.et3
+	java -cp bin com.et3.Game.Main
+
+clean:
+	rm -r bin/com
